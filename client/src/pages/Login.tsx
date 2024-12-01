@@ -1,8 +1,6 @@
 import { useState, FormEvent, ChangeEvent, } from "react";
-
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
-import { log } from "tone/build/esm/core/util/Debug";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({

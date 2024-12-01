@@ -1,5 +1,4 @@
 import { JwtPayload, jwtDecode } from 'jwt-decode';
-import { debug } from 'tone';
 
 class AuthService {
   getProfile() {
