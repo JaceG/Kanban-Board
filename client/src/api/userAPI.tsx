@@ -2,6 +2,13 @@ import Auth from '../utils/auth';
 
 const retrieveUsers = async () => {
   try {
+    const isExpired = Auth.isTokenExpired(
+      Auth.getToken()
+    )
+    if (isExpired)  {
+      Auth.logout()
+      return Promise.reject('Token is expired');
+    }
     const response = await fetch('/api/users', {
       headers: {
         'Content-Type': 'application/json',

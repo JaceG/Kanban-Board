@@ -4,6 +4,14 @@ import Auth from '../utils/auth';
 
 const retrieveTickets = async () => {
   try {
+    const isExpired = Auth.isTokenExpired(
+      Auth.getToken()
+    )
+    if (isExpired)  {
+      window.location.assign('/login');
+      return Promise.reject('Token is expired');
+    }
+
     const response = await fetch(
       '/api/tickets/',
       {
@@ -27,7 +35,15 @@ const retrieveTickets = async () => {
 };
 
 const retrieveTicket = async (id: number | null): Promise<TicketData> => {
+  
   try {
+    const isExpired = Auth.isTokenExpired(
+      Auth.getToken()
+    )
+    if (isExpired)  {
+      Auth.logout()
+      return Promise.reject('Token is expired');
+    }
     const response = await fetch(
       `/api/tickets/${id}`,
       {
@@ -52,6 +68,14 @@ const retrieveTicket = async (id: number | null): Promise<TicketData> => {
 
 const createTicket = async (body: TicketData) => {
   try {
+    const isExpired = Auth.isTokenExpired(
+      Auth.getToken()
+    )
+    if (isExpired)  {
+      Auth.logout()
+      return Promise.reject('Token is expired');
+
+    }
     const response = await fetch(
       '/api/tickets/', {
         method: 'POST',
@@ -79,6 +103,15 @@ const createTicket = async (body: TicketData) => {
 
 const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketData> => {
   try {
+
+    const isExpired = Auth.isTokenExpired(
+      Auth.getToken()
+    )
+    if (isExpired)  {
+      Auth.logout()
+      return Promise.reject('Token is expired');
+
+    }
     const response = await fetch(
       `/api/tickets/${ticketId}`, {
         method: 'PUT',
@@ -104,6 +137,14 @@ const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketD
 
 const deleteTicket = async (ticketId: number): Promise<ApiMessage> => {
   try {
+    const isExpired = Auth.isTokenExpired(
+      Auth.getToken()
+    )
+    if (isExpired)  {
+      Auth.logout()
+      return Promise.reject('Token is expired');
+
+    }
     const response = await fetch(
       `/api/tickets/${ticketId}`, {
         method: 'DELETE',

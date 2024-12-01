@@ -3,8 +3,6 @@ import { useState, FormEvent, ChangeEvent, } from "react";
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 import { log } from "tone/build/esm/core/util/Debug";
-import { Axios } from "axios";
-import { AxiosError } from "axios";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -59,8 +57,8 @@ const Login = () => {
 
       const data = await login(loginData);
       Auth.login(data.token);
-    } catch (err:AxiosError) {
-      alert(err?.response?.data?.message ? err?.response?.data?.message : 'Something went wrong. Please try again later') 
+    } catch (err) {
+      alert(err || 'Something went wrong. Please try again later') 
       console.error('Failed to login', err);
     }
   };

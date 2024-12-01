@@ -1,8 +1,10 @@
 import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { debug } from 'tone';
 
 class AuthService {
   getProfile() {
     // TODO: return the decoded token
+    return jwtDecode<JwtPayload>(this.getToken());
   }
 
   loggedIn() {
@@ -12,10 +14,21 @@ class AuthService {
   
   isTokenExpired(token: string) {
     // TODO: return a value that indicates if the token is expired
-  }
+    if (!token) return true;
+      try {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (!decodedToken.exp) return false;
+        return decodedToken && decodedToken.exp < currentTime;
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        return true;
+      }
+    }
 
   getToken(): string {
     // TODO: return the token
+    return localStorage.getItem('token') ?? '';
   }
 
   login(idToken: string) {

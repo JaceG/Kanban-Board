@@ -20,7 +20,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   let decodedToken: JwtPayload;
 
   try {
-    decodedToken = jwt.verify(token,'secret') as JwtPayload;
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY ?? '') as JwtPayload;
   } catch(err) {
         
     res.status(401).json({ message: 'Invalid token'});

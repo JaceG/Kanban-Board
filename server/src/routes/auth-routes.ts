@@ -23,7 +23,7 @@ if (user === null) {
   const token = jwt.sign({
     username,
     userId:user.id.toString()
-    },'secret',{expiresIn:'1h'});
+    },process.env.JWT_SECRET_KEY ?? '',{expiresIn: '1h'});
   
     return res.status(200).json({token}); 
 }
