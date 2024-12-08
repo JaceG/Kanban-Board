@@ -32,3 +32,6 @@ Credits: This project was created as part of a coding bootcamp group project. - 
 
 ## Preview
 
+![Screenshot](./Assets/Screenshot-1.png)
+![Screenshot](./Assets/Screenshot-2.png)
+![Screenshot](./Assets/Screenshot-3.png)
