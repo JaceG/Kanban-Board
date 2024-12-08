@@ -1,6 +1,4 @@
 import { useEffect, useState, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
-
 import { retrieveTickets, deleteTicket } from '../api/ticketAPI';
 import ErrorPage from './ErrorPage';
 import Swimlane from '../components/Swimlane';
