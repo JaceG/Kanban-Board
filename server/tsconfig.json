@@ -9,5 +9,20 @@
       // "noEmitOnError": true /* Disable emitting files if any type checking errors are reported. */
     },
     "include": ["src"],
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+
+  "name": "server",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npm run build && node dist/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "bcrypt": "^5.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
 }
