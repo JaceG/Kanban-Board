@@ -1,52 +1,49 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models/user';
+import { User } from '../models/user.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { authenticateToken } from '../middleware/auth';
 
-// Define the login function
 export const login = async (req: Request, res: Response) => {
-	// Extract the username and password from the request body
-	const { username, password } = req.body;
+  // TODO: If the user exists and the password is correct, return a JWT token
 
-	try {
-		// Find the user in the database by username
-		const user = await User.findOne({ where: { username } });
+  // Extract the username and password from the request body
+  const username = req.body.username;
+  const password = req.body.password;
 
-		// If the user does not exist, respond with a 401 status and a message indicating invalid credentials
-		if (!user) {
-			return res.status(401).json({ message: 'Invalid credentials' });
-		}
+  // Find the user in the database by username
+  const user = await User.findOne({ where: { username } });
 
-		// Compare the provided password with the hashed password stored in the database
-		const isMatch = await bcrypt.compare(password, user.password);
+  // If the user does not exist, respond with a 401 status and a message indicating invalid credentials
+  if (user === null) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  } else {
+    // Compare the provided password with the hashed password stored in the database
+    const isMatch = await bcrypt.compare(password, user.password);
 
-		// If the password does not match, respond with a 401 status and a message indicating invalid credentials
-		if (!isMatch) {
-			return res.status(401).json({ message: 'Invalid credentials' });
-		}
+    // If the password does not match, respond with a 401 status and a message indicating invalid credentials
+    if (!isMatch) {
+      return res.status(401.json({ message: 'Invalid credentials' });
+    }
 
-		// If the password matches, generate a JWT token with the username and user ID as payload
-		const token = jwt.sign(
-			{
-				username,
-				userId: user.id.toString(),
-			},
-			process.env.JWT_SECRET_KEY || '', // Use the secret key from environment variables
-			{ expiresIn: '1h' } // Set the token to expire in 1 hour
-		);
+    // If the password matches, generate a JWT token with the username and user ID as payload
+    const token = jwt.sign(
+      {
+        username,
+        userId: user.id.toString()
+      },
+      process.env.JWT_SECRET_KEY || '', // Use the secret key from environment variables
+      { expiresIn: '1h' } // Set the token to expire in 1 hour
+    );
 
-		// Respond with a 200 status and the generated token
-		return res.status(200).json({ token });
-	} catch (error) {
-		// Handle any errors that occur during the process
-		console.error(error);
-		return res.status(500).json({ message: 'Internal server error' });
-	}
+    // Respond with a 200 status and the generated token
+    return res.status(200.json({ token });
+  }
 };
 
 const router = Router();
 
-// POST /login - Login a user
+// POST /login Route to login a user
 router.post('/login', login);
 
 export default router;
