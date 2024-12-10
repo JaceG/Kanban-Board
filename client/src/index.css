@@ -45,7 +45,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-  color: white; /* Default color for button text */
+  color: white;
 }
 
 button:hover {
@@ -345,5 +345,8 @@ tbody tr:nth-child(odd) {
 @media (prefers-color-scheme: dark) {
   button {
     color: white; /* Text color for dark mode */
+  }
+  a {
+    color: white;
   }
 }

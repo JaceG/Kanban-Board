@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 app.use(express.json());
-app.use('/api', routes); // Register routes under the /api prefix
+app.use(routes); // Register routes under the /api prefix
 
 // Fallback route to serve the index.html file for any other requests
 app.get('*', (_req, res) => {
