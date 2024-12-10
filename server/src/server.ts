@@ -5,9 +5,11 @@ import express from 'express';
 import path from 'path';
 import routes from './routes/index.js';
 import { sequelize } from './models/index.js';
+import { fileURLToPath } from 'node:url';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve static files from the client's dist folder
